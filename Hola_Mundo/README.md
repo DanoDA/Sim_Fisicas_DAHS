@@ -125,6 +125,5 @@ for (int32 i = 0; i < 60; ++i)
 }
 ```
 
-Lo que te debería de al principio.
-![Lo que te debiera de imprimir al principio!](C:\Users\Dan08\Pictures/Hola_Mundo.png)
+
 
