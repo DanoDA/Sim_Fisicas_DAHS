@@ -82,18 +82,18 @@ int main() {
     //Creacion del mundo y de la gravedad
     b2Vec2 gravity(0.0f, -9.81f);
     b2World world(gravity);
-    ``` 
+```
 Ahora las características del cuerpo en el suelo con su posición inicial.
 ``` c
 //Caracteristicas del cuerpo
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0.0f, -10.0f);
-    ``` 
+```
 Se crea un cuerpo rígido con las características del cuerpo.
 ``` c
   //Creamos el cuerpo
     b2Body *groundBody = world.CreateBody(&groundBodyDef);
-    ``` 
+```
 Podemos crear la forma del suelo y de el cubo para poder hacer la simulación de una caída, donde definimos la densidad del cubo , también su fricción.
 ``` c
 //Crear la forma
@@ -112,7 +112,7 @@ Podemos crear la forma del suelo y de el cubo para poder hacer la simulación de
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    ``` 
+```
 Solo falta la parte de velocidad de caída para poder hacer la simulación, donde es cada 60 interacciones , para poder saber la posición del cubo.
 ``` c
 for (int32 i = 0; i < 60; ++i)
