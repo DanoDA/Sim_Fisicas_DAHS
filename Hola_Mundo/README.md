@@ -94,7 +94,7 @@ Se crea un cuerpo rígido con las características del cuerpo.
   //Creamos el cuerpo
     b2Body *groundBody = world.CreateBody(&groundBodyDef);
 ```
-Podemos crear la forma del suelo, la densidad del suelo y se crea el cubo para poder hacer la simulación de una caída, donde definimos la densidad del cubo , también su fricción.
+Podemos crear la forma del suelo, la densidad del suelo y se crea el cubo para poder hacer la simulación de una caída, donde definimos la densidad del cubo , también su fricción y tambien su altura.
 ``` c
 //Crear la forma
     b2PolygonShape groundBox;
