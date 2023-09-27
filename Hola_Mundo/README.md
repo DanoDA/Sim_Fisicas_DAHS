@@ -1,0 +1,130 @@
+## Hola_Mundo
+En este código se explica la caída de un cubo en la gravedad de la tierra
+
+## ¿Qué es la gravedad?
+La gravedad es un fenómeno natural por el cual los objetos con masa son
+atraídos entre sí, efecto mayormente observable en la interacción entre los
+planetas, galaxias y demás objetos del universo. Es una de las cuatro
+interacciones fundamentales que origina la aceleración que experimenta un
+cuerpo físico en las cercanías de un objeto astronómico. También se denomina
+interacción gravitatoria o gravitación
+## ¿Qué es la densidad?
+La densidad es una magnitud referida a la cantidad de masa contenida en un determinado volumen, y puede utilizarse en términos absolutos o relativos.
+## ¿Qué es la Friccion?
+La fricción, fuerza de roce o fuerza de rozamiento es una fuerza existente entre dos superficies que se encuentren en contacto, y que se opone al movimiento, o sea, tiene dirección contraria al movimiento.
+## ¿De cuanto es la gravedad en la tierra?
+La aceleración de los objetos debido a la gravedad en la Tierra es de alrededor de **9,807 m/s²** . Pero si redondeamos los decimales, quedara **9,81 m/s²**.
+
+## Código
+
+``` c
+#include <iostream>
+#include <box2d/box2d.h>
+
+int main() {
+    //Creacion del mundo y de la gravedad
+    b2Vec2 gravity(0.0f, -9.81f);
+    b2World world(gravity);
+
+    //Caracteristicas del cuerpo
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0.0f, -10.0f);
+    //Creamos el cuerpo
+    b2Body *groundBody = world.CreateBody(&groundBodyDef);
+
+    //Crear la forma
+    b2PolygonShape groundBox;
+    groundBox.SetAsBox(50.0f,1.0f);
+
+    groundBody ->CreateFixture(&groundBox, 0.0f);
+
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(0.0f, 20.f);
+    b2Body* body = world.CreateBody(&bodyDef);
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(1.0f,1.0f);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+
+    body ->CreateFixture(&fixtureDef);
+
+    float timeStep = 1.0f/60.0f;
+    int32 velocityIterations = 6;
+    int32 positionIterations = 2;
+
+    for (int32 i = 0; i < 60; ++i)
+    {
+        world.Step(timeStep, velocityIterations, positionIterations);
+        b2Vec2 position = body->GetPosition();
+        float angle = body->GetAngle();
+        printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+
+
+    }
+
+
+
+
+}
+```
+## Explicación de Código
+Se agrega primero la librería Box2D: 
+``` c
+#include <iostream>
+#include <box2d/box2d.h>
+``` 
+Después vamos a empezar a crear el mundo(Tierra), donde definimos la gravedad que es -9.81, se pone en negativo porque la gravedad nos jala hacia abajo,
+``` c
+int main() {
+    //Creacion del mundo y de la gravedad
+    b2Vec2 gravity(0.0f, -9.81f);
+    b2World world(gravity);
+    ``` 
+Ahora las características del cuerpo en el suelo con su posición inicial.
+``` c
+//Caracteristicas del cuerpo
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0.0f, -10.0f);
+    ``` 
+Se crea un cuerpo rígido con las características del cuerpo.
+``` c
+  //Creamos el cuerpo
+    b2Body *groundBody = world.CreateBody(&groundBodyDef);
+    ``` 
+Podemos crear la forma del suelo y de el cubo para poder hacer la simulación de una caída, donde definimos la densidad del cubo , también su fricción.
+``` c
+//Crear la forma
+    b2PolygonShape groundBox;
+    groundBox.SetAsBox(50.0f,1.0f);
+
+    groundBody ->CreateFixture(&groundBox, 0.0f);
+
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(0.0f, 20.f);
+    b2Body* body = world.CreateBody(&bodyDef);
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(1.0f,1.0f);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    ``` 
+Solo falta la parte de velocidad de caída para poder hacer la simulación, donde es cada 60 interacciones , para poder saber la posición del cubo.
+``` c
+for (int32 i = 0; i < 60; ++i)
+    {
+        world.Step(timeStep, velocityIterations, positionIterations);
+        b2Vec2 position = body->GetPosition();
+        float angle = body->GetAngle();
+        printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+     }
+}
+```
+
+Lo que te debería de al principio.
+![Lo que te debiera de imprimir al principio!](C:\Users\Dan08\Pictures/Hola_Mundo.png)
+
